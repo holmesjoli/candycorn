@@ -17,11 +17,13 @@ function unique_array(data, variable) {
 // Title Generates a y-axis label
 // Param yVar string. Name of the y-variable
 // Return string.
-function yLab(yVar) {
+function yLabs(yVar) {
     if (yVar == "pounds") {
-        return "Candy corn purchased (lbs)";
+        return {ylab: "Candy corn purchased (lbs)",
+                title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season"};
     } else {
-        return "Pounds purchased per 100 people"
+        return {ylab:"Pounds purchased per 100 people",
+                title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"}
     }
 };
 
@@ -29,15 +31,17 @@ function yLab(yVar) {
 // Param id string. HTML ID
 // Param yVar string. Name of the y-variable
 // Return object
-function bar(id, yVar) {
+function state_bar(id, yVar) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
     // Data have been combined and filtered
     d3.csv("./data/candycorn.csv").then(function(data) {
 
+        console.log("data", data);
+
         const width = 1000;
         const height = window.innerHeight;
-        const margin = {top: 25, left: 100, right: 200, bottom: 125};
+        const margin = {top: 100, left: 100, right: 200, bottom: 125};
         
         let svg = d3.select(id)
                     .append("svg")
@@ -49,12 +53,10 @@ function bar(id, yVar) {
             min: d3.min(data, function(d) {return +d[yVar];})
         };
 
-        console.log(lb);
-
         const states = d3.map(data, function(d) {return d.name;})
         const regions = d3.map(data, function(d) {return d.region_name;})
-        const fillColors = ["#1B9E77", "#D95F02", "#7570B3", "#E7298A"];
-        const strokeColors = ["black", "white"];
+        const fillColors = ["#1B9E77", "#FF761E", "#7570B3", "#F7CD1E"];
+        const strokeColors = ["#333333", "white"];
 
         const regions_unique = unique_array(data, "region_name");
         const high_per_pop_unique = unique_array(data, "high_per_pop");
@@ -63,6 +65,8 @@ function bar(id, yVar) {
         regions_unique.forEach(function(d, i) {
             legend_data.push({regions: d, color: fillColors[i]});
         });
+
+        let yLabels = yLabs(yVar);
 
         // Scales
         let yScale = d3.scaleLinear()
@@ -93,7 +97,7 @@ function bar(id, yVar) {
                     .attr("stroke", function(d) {return strokeScale(d.high_per_pop);})
                     .attr("stroke-width", 2)
                     .attr("width", xScale.bandwidth())
-                    .attr("height", function(d) {return height - margin.bottom - yScale(d.pounds);});
+                    .attr("height", function(d) {return height - margin.bottom - yScale(d[yVar]);});
 
         //Axes
         const xAxis = svg.append("g")
@@ -122,7 +126,7 @@ function bar(id, yVar) {
                     .attr("y", 30)
                     .attr("text-anchor","middle")
                     .attr("transform","rotate(-90)")
-                    .text(yLab(yVar));
+                    .text(yLabels.ylab);
 
         // Region legend
 
@@ -150,7 +154,7 @@ function bar(id, yVar) {
         svg
             .append("text")
             .attr("x", legendx + legend_margin)
-            .attr("y", 30)
+            .attr("y", margin.top + 5)
             .text("Region")
             .style("font-weight", "bold");
 
@@ -161,24 +165,34 @@ function bar(id, yVar) {
             .attr("width", 20)
             .attr("height", 20)
             .attr("x", legendx + legend_margin)
-            .attr("y", 200)
-            .attr("fill", "black")
+            .attr("y", margin.top +180)
+            .attr("fill", "#333333")
             .attr("stroke", "white")
             .attr("stroke-width", 2);
 
         svg
             .append("text")
             .attr("x", legendx + legend_margin + 25)
-            .attr("y", 215)
+            .attr("y", margin.top + 190)
             .text("High consumption");
 
         svg
             .append("text")
             .attr("x", legendx + legend_margin + 25)
-            .attr("y", 230)
+            .attr("y", margin.top + 205)
             .text("per capita");
+
+        //Title
+        svg
+            .append("text")
+            .attr("class", "chart-title")
+            .attr("x", (width - margin.left)/2)
+            .attr("y", 50)
+            .attr("font-size", 20)
+            .text(yLabels.title)
+            .attr("text-anchor", "middle");
     });
 };
 
-bar("#chart-1", yVar = "pounds");
-bar("#chart-2", yVar = "pound_per_pop_100");
+state_bar("#chart-1", yVar = "pounds");
+state_bar("#chart-2", yVar = "pound_per_pop_100");
