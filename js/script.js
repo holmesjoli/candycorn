@@ -166,7 +166,7 @@ function bar(id, attr) {
                 .append("text")
                 .attr("x", legendx + legend_margin + 25)
                 .attr("y", margin.top + 205)
-                .text("per capita");
+                .text("per capita threshold");
         }
 
         //Title
