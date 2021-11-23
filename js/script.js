@@ -17,12 +17,15 @@ function unique_array(data, variable) {
 // Title Generates a y-axis label
 // Param yVar string. Name of the y-variable
 // Return string.
-function yLabs(yVar) {
+function labs(yVar, xVar) {
+
     if (yVar == "pounds") {
         return {ylab: "Candy corn purchased (lbs)",
+                xlab: "State",
                 title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season"};
     } else {
         return {ylab:"Pounds purchased per 100 people",
+                xlab: "State",
                 title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"}
     }
 };
@@ -31,7 +34,7 @@ function yLabs(yVar) {
 // Param id string. HTML ID
 // Param yVar string. Name of the y-variable
 // Return object
-function state_bar(id, yVar) {
+function bar(id, yVar, xVar) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
     // Data have been combined and filtered
@@ -53,7 +56,7 @@ function state_bar(id, yVar) {
             min: d3.min(data, function(d) {return +d[yVar];})
         };
 
-        const states = d3.map(data, function(d) {return d.name;})
+        const geo = d3.map(data, function(d) {return d[xVar];})
         const regions = d3.map(data, function(d) {return d.region_name;})
         const fillColors = ["#1B9E77", "#FF761E", "#7570B3", "#F7CD1E"];
         const strokeColors = ["#333333", "white"];
@@ -66,7 +69,7 @@ function state_bar(id, yVar) {
             legend_data.push({regions: d, color: fillColors[i]});
         });
 
-        let yLabels = yLabs(yVar);
+        let labels = labs(yVar, xVar);
 
         // Scales
         let yScale = d3.scaleLinear()
@@ -74,7 +77,7 @@ function state_bar(id, yVar) {
                     .range([height-margin.bottom, margin.top]);
 
         let xScale = d3.scaleBand()
-                    .domain(states)
+                    .domain(geo)
                     .range([margin.left, width-margin.right])
                     .padding(0.1);
 
@@ -91,7 +94,7 @@ function state_bar(id, yVar) {
                     .data(data)
                     .enter()
                     .append("rect")
-                    .attr("x", function(d) {return xScale(d.name);})
+                    .attr("x", function(d) {return xScale(d[xVar]);})
                     .attr("y", function(d) {return yScale(d[yVar]);})
                     .attr("fill", function(d) {return fillScale(d.region_name);})
                     .attr("stroke", function(d) {return strokeScale(d.high_per_pop);})
@@ -126,7 +129,7 @@ function state_bar(id, yVar) {
                     .attr("y", 30)
                     .attr("text-anchor","middle")
                     .attr("transform","rotate(-90)")
-                    .text(yLabels.ylab);
+                    .text(labels.ylab);
 
         // Region legend
 
@@ -189,10 +192,11 @@ function state_bar(id, yVar) {
             .attr("x", (width - margin.left)/2)
             .attr("y", 50)
             .attr("font-size", 20)
-            .text(yLabels.title)
+            .text(labels.title)
             .attr("text-anchor", "middle");
     });
 };
 
-state_bar("#chart-1", yVar = "pounds");
-state_bar("#chart-2", yVar = "pound_per_pop_100");
+bar("#chart-1", yVar = "pounds", xVar = "name");
+bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name");
+
