@@ -14,14 +14,9 @@ function unique_array(data, variable) {
     return u;
 };
 
-function switch_variable(lbs) {
-    if (lbs) {
-        return "pounds";
-    } else {
-        return "pop_per_pound";
-    }
-};
-
+// Title Generates a y-axis label
+// Param yVar string. Name of the y-variable
+// Return string.
 function yLab(yVar) {
     if (yVar == "pounds") {
         return "Candy corn purchased (lbs)";
@@ -31,6 +26,10 @@ function yLab(yVar) {
 }
 
 
+// Title Bar
+// Param id string. HTML ID
+// Param yVar string. Name of the y-variable
+// Return object
 function bar(id, yVar) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
@@ -45,7 +44,6 @@ function bar(id, yVar) {
                     .append("svg")
                     .attr("height", height)
                     .attr("width", width);
-
 
         const lb = {
             max: d3.max(data, function(d) {return +d[yVar];}),
@@ -186,5 +184,4 @@ function bar(id, yVar) {
 };
 
 bar("#chart-1", yVar = "pounds");
-
 bar("#chart-2", yVar = "pound_per_pop");
