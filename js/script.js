@@ -15,21 +15,23 @@ function unique_array(data, variable) {
 };
 
 // Title Bar
-// Param id string. HTML ID
+// Param attr object. Object of attributes
 // Param yVar string. Name of the y-variable
 // Return object
-function bar(id, yVar, xVar, pth, attr) {
+function bar(id, attr) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
     // Data have been combined and filtered
-    d3.csv(pth).then(function(data) {
+    d3.csv(attr.pth).then(function(data) {
 
         console.log("data", data);
 
         const width = 1000;
         const height = window.innerHeight;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
-        
+        let yVar = attr.yVar;
+        let xVar = attr.xVar;
+
         let svg = d3.select(id)
                     .append("svg")
                     .attr("height", height)
@@ -180,21 +182,30 @@ function bar(id, yVar, xVar, pth, attr) {
 };
 
 let chart1_attr = {
+    yVar: "pounds",
+    xVar: "name",
+    pth: "./data/candycorn.csv",
     ylab: "Candy corn purchased (lbs)",
     xlab: "State",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season"};
 
 let chart2_attr = {
+    yVar: "pound_per_pop_100",
+    xVar: "name",
+    pth: "./data/candycorn.csv",
     ylab: "Pounds purchased per 100 people",
     xlab: "State",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"};
 
 let chart3_attr = {
+    yVar: "pound_per_pop_100",
+    xVar: "region_name",
+    pth: "./data/candycorn_region.csv",
     ylab: "Pounds purchased per 100 people",
     xlab: "Region",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"};
 
-bar("#chart-1", yVar = "pounds", xVar = "name", pth = "./data/candycorn.csv", attr = chart1_attr);
-bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name", pth = "./data/candycorn.csv", attr = chart2_attr);
-bar("#chart-3", yVar = "pound_per_pop_100", xVar = "region_name", pth = "./data/candycorn_region.csv", attr = chart3_attr);
+bar("#chart-1", attr = chart1_attr);
+bar("#chart-2", attr = chart2_attr);
+bar("#chart-3", attr = chart3_attr);
 
