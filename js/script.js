@@ -36,15 +36,8 @@ function bar(id, yVar) {
         let svg = d3.select(id)
                     .append("svg")
                     .attr("height", height)
-                    .attr("width", width)
-                    ;
+                    .attr("width", width);
 
-        // let yVar = "pounds";
-        
-        //Sort data
-        // data.sort(function(x, y){
-        //     return d3.descending(+x[yVar], +y[yVar]);
-        // });
 
         const lb = {
             max: d3.max(data, function(d) {return +d[yVar];}),
@@ -53,7 +46,7 @@ function bar(id, yVar) {
 
         const states = d3.map(data, function(d) {return d.name;})
         const regions = d3.map(data, function(d) {return d.region_name;})
-        const fillColors = ["#661468", "#ff008c", "#93ba1c", "#f7cd1e"];
+        const fillColors = ["#1B9E77", "#D95F02", "#7570B3", "#E7298A"];
         const strokeColors = ["black", "white"];
 
         const regions_unique = unique_array(data, "region_name");
@@ -163,8 +156,8 @@ function bar(id, yVar) {
             .attr("height", 20)
             .attr("x", legendx + legend_margin)
             .attr("y", 200)
-            .attr("fill", "white")
-            .attr("stroke", "black")
+            .attr("fill", "black")
+            .attr("stroke", "white")
             .attr("stroke-width", 2);
 
         svg
@@ -183,4 +176,4 @@ function bar(id, yVar) {
 
 bar("#chart-1", yVar = "pounds");
 
-bar("#chart-2", yVar = "pop_per_pound");
+bar("#chart-2", yVar = "pound_per_pop");
