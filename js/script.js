@@ -22,6 +22,14 @@ function switch_variable(lbs) {
     }
 };
 
+function yLab(yVar) {
+    if (yVar == "pounds") {
+        return "Candy corn purchased (lbs)";
+    } else {
+        return "Pounds purchased per person"
+    }
+}
+
 
 function bar(id, yVar) {
 
@@ -110,14 +118,17 @@ function bar(id, yVar) {
                     .attr("text-anchor","middle")
                     .text("State");
 
+        let yText = yLab(yVar);
+        console.log(yText);
+
         svg.append("text")
                     .attr("class","axisLabel")
                     .attr("x", -(height-margin.bottom)/2)
                     .attr("y", 30)
                     .attr("text-anchor","middle")
                     .attr("transform","rotate(-90)")
-                    .text("Candy corn purchased (lbs)");
-        
+                    .text(yText);
+
         // Region legend
 
         const legendx = width - margin.right;
