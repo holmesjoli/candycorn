@@ -81,6 +81,7 @@ function bar(id, yVar) {
                     .domain(high_per_pop_unique)
                     .range(strokeColors);
 
+        //Bars
         svg.selectAll("rect")
                     .data(data)
                     .enter()
@@ -94,7 +95,6 @@ function bar(id, yVar) {
                     .attr("height", function(d) {return height - margin.bottom - yScale(d.pounds);});
 
         //Axes
-
         const xAxis = svg.append("g")
                     .attr("transform",`translate(0,${height-margin.bottom})`)              
                     .call(d3.axisBottom().scale(xScale))
@@ -115,16 +115,13 @@ function bar(id, yVar) {
                     .attr("text-anchor","middle")
                     .text("State");
 
-        let yText = yLab(yVar);
-        console.log(yText);
-
         svg.append("text")
                     .attr("class","axisLabel")
                     .attr("x", -(height-margin.bottom)/2)
                     .attr("y", 30)
                     .attr("text-anchor","middle")
                     .attr("transform","rotate(-90)")
-                    .text(yText);
+                    .text(yLab(yVar));
 
         // Region legend
 
