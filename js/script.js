@@ -55,7 +55,7 @@ function bar(id, yVar, xVar, pth) {
             max: d3.max(data, function(d) {return +d[yVar];}),
             min: d3.min(data, function(d) {return +d[yVar];})
         };
-
+        console.log(lb);
         const geo = d3.map(data, function(d) {return d[xVar];})
         const regions = d3.map(data, function(d) {return d.region_name;})
         const fillColors = ["#1B9E77", "#FF761E", "#7570B3", "#F7CD1E"];
@@ -199,4 +199,5 @@ function bar(id, yVar, xVar, pth) {
 
 bar("#chart-1", yVar = "pounds", xVar = "name", pth = "./data/candycorn.csv");
 bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name", pth = "./data/candycorn.csv");
+bar("#chart-3", yVar = "pound_per_pop_100", xVar = "region_name", pth = "./data/candycorn_region.csv");
 
