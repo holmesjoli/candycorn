@@ -34,11 +34,11 @@ function labs(yVar, xVar) {
 // Param id string. HTML ID
 // Param yVar string. Name of the y-variable
 // Return object
-function bar(id, yVar, xVar) {
+function bar(id, yVar, xVar, pth) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
     // Data have been combined and filtered
-    d3.csv("./data/candycorn.csv").then(function(data) {
+    d3.csv(pth).then(function(data) {
 
         console.log("data", data);
 
@@ -197,6 +197,6 @@ function bar(id, yVar, xVar) {
     });
 };
 
-bar("#chart-1", yVar = "pounds", xVar = "name");
-bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name");
+bar("#chart-1", yVar = "pounds", xVar = "name", pth = "./data/candycorn.csv");
+bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name", pth = "./data/candycorn.csv");
 
