@@ -23,8 +23,7 @@ function yLab(yVar) {
     } else {
         return "Pounds purchased per person"
     }
-}
-
+};
 
 // Title Bar
 // Param id string. HTML ID
