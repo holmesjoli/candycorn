@@ -9,7 +9,6 @@ html, body {
     background-color: #333333;
     color: #ffffff;
     margin: 0;
-
 }
 
 .sub-head,
@@ -33,15 +32,12 @@ figure#chart {
     margin: 0px;
 }
 
-#header {
-    text-align: center;
-}
-
 #footer,
 #header {
     flex: 1 0 2%;
     background-color: #9cb6dd;
     color: #000000;
+    text-align: center;
 }
 
 #byline {
@@ -58,7 +54,7 @@ figure#chart {
 #main {
     flex: 1 0 65%;
     padding: 20px;
-    margin-right: 10%;
+    margin: 0 30px;
 }
 
 #sidebar {
