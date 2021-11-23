@@ -21,7 +21,7 @@ function yLab(yVar) {
     if (yVar == "pounds") {
         return "Candy corn purchased (lbs)";
     } else {
-        return "Pounds purchased per person"
+        return "Pounds purchased per 100 people"
     }
 };
 
@@ -49,6 +49,8 @@ function bar(id, yVar) {
             min: d3.min(data, function(d) {return +d[yVar];})
         };
 
+        console.log(lb);
+
         const states = d3.map(data, function(d) {return d.name;})
         const regions = d3.map(data, function(d) {return d.region_name;})
         const fillColors = ["#1B9E77", "#D95F02", "#7570B3", "#E7298A"];
@@ -56,7 +58,6 @@ function bar(id, yVar) {
 
         const regions_unique = unique_array(data, "region_name");
         const high_per_pop_unique = unique_array(data, "high_per_pop");
-        console.log(high_per_pop_unique);
 
         const legend_data = [];
         regions_unique.forEach(function(d, i) {
@@ -180,4 +181,4 @@ function bar(id, yVar) {
 };
 
 bar("#chart-1", yVar = "pounds");
-bar("#chart-2", yVar = "pound_per_pop");
+bar("#chart-2", yVar = "pound_per_pop_100");
