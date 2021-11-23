@@ -1,3 +1,5 @@
+// Carousel code is https://www.w3schools.com/howto/howto_js_slideshow.asp and modified
+
 var slideIndex = 1;
 showSlides(slideIndex);
 
