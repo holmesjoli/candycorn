@@ -30,7 +30,7 @@ d3.csv("./data/candycorn.csv").then(function(data) {
     const height = window.innerHeight;
     const margin = {top: 25, left: 100, right: 200, bottom: 125};
     
-    let svg = d3.select("#chart")
+    let svg = d3.select("#chart-1")
                 .append("svg")
                 .attr("height", height)
                 .attr("width", width)
