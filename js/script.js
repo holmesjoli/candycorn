@@ -22,6 +22,8 @@ function switch_variable(lbs) {
     }
 };
 
+function bar(id) {
+
 // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
 // Data have been combined and filtered
 d3.csv("./data/candycorn.csv").then(function(data) {
@@ -30,7 +32,7 @@ d3.csv("./data/candycorn.csv").then(function(data) {
     const height = window.innerHeight;
     const margin = {top: 25, left: 100, right: 200, bottom: 125};
     
-    let svg = d3.select("#chart-1")
+    let svg = d3.select(id)
                 .append("svg")
                 .attr("height", height)
                 .attr("width", width)
@@ -176,3 +178,6 @@ d3.csv("./data/candycorn.csv").then(function(data) {
         .attr("y", 230)
         .text("per capita");
 });
+};
+
+bar("#chart-1");
