@@ -14,27 +14,11 @@ function unique_array(data, variable) {
     return u;
 };
 
-// Title Generates a y-axis label
-// Param yVar string. Name of the y-variable
-// Return string.
-function labs(yVar, xVar) {
-
-    if (yVar == "pounds") {
-        return {ylab: "Candy corn purchased (lbs)",
-                xlab: "State",
-                title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season"};
-    } else {
-        return {ylab:"Pounds purchased per 100 people",
-                xlab: "State",
-                title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"}
-    }
-};
-
 // Title Bar
 // Param id string. HTML ID
 // Param yVar string. Name of the y-variable
 // Return object
-function bar(id, yVar, xVar, pth) {
+function bar(id, yVar, xVar, pth, labels) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
     // Data have been combined and filtered
@@ -68,8 +52,6 @@ function bar(id, yVar, xVar, pth) {
         regions_unique.forEach(function(d, i) {
             legend_data.push({regions: d, color: fillColors[i]});
         });
-
-        let labels = labs(yVar, xVar);
 
         // Scales
         let yScale = d3.scaleLinear()
@@ -121,7 +103,7 @@ function bar(id, yVar, xVar, pth) {
                     .attr("x", margin.left + (width-margin.left-margin.right)/2)
                     .attr("y", height - 5)
                     .attr("text-anchor","middle")
-                    .text("State");
+                    .text(labels.xlab);
 
         svg.append("text")
                     .attr("class","axisLabel")
@@ -197,7 +179,22 @@ function bar(id, yVar, xVar, pth) {
     });
 };
 
-bar("#chart-1", yVar = "pounds", xVar = "name", pth = "./data/candycorn.csv");
-bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name", pth = "./data/candycorn.csv");
-bar("#chart-3", yVar = "pound_per_pop_100", xVar = "region_name", pth = "./data/candycorn_region.csv");
+let chart1_attr = {
+    ylab: "Candy corn purchased (lbs)",
+    xlab: "State",
+    title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season"};
+
+let chart2_attr = {
+    ylab: "Pounds purchased per 100 people",
+    xlab: "State",
+    title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"};
+
+let chart3_attr = {
+    ylab: "Pounds purchased per 100 people",
+    xlab: "Region",
+    title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"};
+
+bar("#chart-1", yVar = "pounds", xVar = "name", pth = "./data/candycorn.csv", labels = chart1_attr);
+bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name", pth = "./data/candycorn.csv", labels = chart2_attr);
+bar("#chart-3", yVar = "pound_per_pop_100", xVar = "region_name", pth = "./data/candycorn_region.csv", labels = chart3_attr);
 
