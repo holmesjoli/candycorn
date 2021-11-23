@@ -18,7 +18,7 @@ function unique_array(data, variable) {
 // Param id string. HTML ID
 // Param yVar string. Name of the y-variable
 // Return object
-function bar(id, yVar, xVar, pth, labels) {
+function bar(id, yVar, xVar, pth, attr) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
     // Data have been combined and filtered
@@ -103,7 +103,7 @@ function bar(id, yVar, xVar, pth, labels) {
                     .attr("x", margin.left + (width-margin.left-margin.right)/2)
                     .attr("y", height - 5)
                     .attr("text-anchor","middle")
-                    .text(labels.xlab);
+                    .text(attr.xlab);
 
         svg.append("text")
                     .attr("class","axisLabel")
@@ -111,7 +111,7 @@ function bar(id, yVar, xVar, pth, labels) {
                     .attr("y", 30)
                     .attr("text-anchor","middle")
                     .attr("transform","rotate(-90)")
-                    .text(labels.ylab);
+                    .text(attr.ylab);
 
         // Region legend
 
@@ -174,7 +174,7 @@ function bar(id, yVar, xVar, pth, labels) {
             .attr("x", (width - margin.left)/2)
             .attr("y", 50)
             .attr("font-size", 20)
-            .text(labels.title)
+            .text(attr.title)
             .attr("text-anchor", "middle");
     });
 };
@@ -194,7 +194,7 @@ let chart3_attr = {
     xlab: "Region",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season"};
 
-bar("#chart-1", yVar = "pounds", xVar = "name", pth = "./data/candycorn.csv", labels = chart1_attr);
-bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name", pth = "./data/candycorn.csv", labels = chart2_attr);
-bar("#chart-3", yVar = "pound_per_pop_100", xVar = "region_name", pth = "./data/candycorn_region.csv", labels = chart3_attr);
+bar("#chart-1", yVar = "pounds", xVar = "name", pth = "./data/candycorn.csv", attr = chart1_attr);
+bar("#chart-2", yVar = "pound_per_pop_100", xVar = "name", pth = "./data/candycorn.csv", attr = chart2_attr);
+bar("#chart-3", yVar = "pound_per_pop_100", xVar = "region_name", pth = "./data/candycorn_region.csv", attr = chart3_attr);
 
