@@ -203,5 +203,97 @@ let chart2_attr = {
     chart_id: "#chart",
     button_id: "#pound_per_pop_100"};
 
-bar(attr = chart1_attr);
-bar(attr = chart2_attr);
+
+function bar_transition(attr = chart1_attr) {
+
+    d3.csv(attr.pth).then(function(data) {
+
+        const width = 1000;
+        const height = window.innerHeight;
+        const margin = {top: 100, left: 100, right: 200, bottom: 125};
+        
+        let yVar = attr.yVar;
+        let xVar = attr.xVar;
+
+        const lb = {
+            max: d3.max(data, function(d) {return +d[yVar];}),
+            min: d3.min(data, function(d) {return +d[yVar];})
+        };
+
+        const lb_cap = {
+            max: d3.max(data, function(d) {return +d.pound_per_pop_100;}),
+            min: d3.min(data, function(d) {return +d.pound_per_pop_100;})
+        };
+
+        const geo = d3.map(data, function(d) {return d[xVar];})
+        const regions = d3.map(data, function(d) {return d.region_name;})
+        const fillColors = ["#1B9E77", "#FF761E", "#7570B3", "#F7CD1E"];
+        const strokeColors = ["#333333", "white"];
+
+        const regions_unique = unique_array(data, "region_name");
+        const high_per_pop_unique = unique_array(data, "high_per_pop");
+
+        const legend_data = [];
+        regions_unique.forEach(function(d, i) {
+            legend_data.push({regions: d, color: fillColors[i]});
+        });
+
+        // Scales
+        let yScale = d3.scaleLinear()
+                    .domain([0, lb.max])
+                    .range([height-margin.bottom, margin.top]);
+
+        let xScale = d3.scaleBand()
+                    .domain(geo)
+                    .range([margin.left, width-margin.right])
+                    .padding(0.1);
+
+        let fillScale = d3.scaleOrdinal()
+                    .domain(regions)
+                    .range(fillColors);
+
+        let strokeScale = d3.scaleOrdinal()
+                    .domain(high_per_pop_unique)
+                    .range(strokeColors);
+
+        let svg = d3.select(attr.chart_id)
+                    .append("svg")
+                    .attr("height", height)
+                    .attr("width", width);
+
+        let bar = svg.selectAll("rect")
+            .data(data)
+            .enter()
+            .append("rect")
+                .attr("x", function(d) { return xScale(d.name); })
+                .attr("y", function(d) { return yScale(d.pounds); })
+                .attr("fill", function(d) {return fillScale(d.region_name);})
+                .attr("stroke", function(d) {return strokeScale(d.high_per_pop);})
+                .attr("stroke-width", 2)
+                .attr("width", xScale.bandwidth())
+                .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
+
+        d3.select("#pounds").on("click", function() {
+
+            yScale.domain([0, lb.max]);
+
+            bar.transition()
+                .duration(1500)
+                .attr("y", function(d) { return yScale(d.pounds); })
+                .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
+        
+        });
+
+        d3.select("#pound_per_pop_100").on("click", function() {
+            yScale.domain([0, lb_cap.max]);
+
+            bar.transition()
+                .duration(1500)
+                .attr("y", function(d) { return yScale(d.pound_per_pop_100); })
+                .attr("height", function(d) { return height - margin.bottom - yScale(d.pound_per_pop_100); });
+
+        });
+    });
+};
+
+bar_transition();
