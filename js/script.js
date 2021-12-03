@@ -18,7 +18,7 @@ function unique_array(data, variable) {
 // Param attr object. Object of attributes
 // Param yVar string. Name of the y-variable
 // Return object
-function bar(id, attr) {
+function bar(attr) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
     // Data have been combined and filtered
@@ -30,7 +30,7 @@ function bar(id, attr) {
         let yVar = attr.yVar;
         let xVar = attr.xVar;
 
-        let svg = d3.select(id)
+        let svg = d3.select(attr.chart_id)
                     .append("svg")
                     .attr("height", height)
                     .attr("width", width);
@@ -93,7 +93,7 @@ function bar(id, attr) {
                     .attr("dx", "-.8em")
                     .attr("dy", ".15em")
                     .attr("transform", "rotate(-65)");
-            
+
         const yAxis = svg.append("g")
                     .attr("transform",`translate(${margin.left},0)`)
                     .call(d3.axisLeft().scale(yScale));
@@ -189,6 +189,7 @@ let chart1_attr = {
     xlab: "State",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
     show_stroke_legend: true,
+    chart_id: "#chart",
     button_id: "#pounds"};
 
 let chart2_attr = {
@@ -199,8 +200,8 @@ let chart2_attr = {
     xlab: "State",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
     show_stroke_legend: true,
+    chart_id: "#chart",
     button_id: "#pound_per_pop_100"};
 
-bar("#chart-1", attr = chart1_attr);
-bar("#chart-2", attr = chart2_attr);
-
+bar(attr = chart1_attr);
+bar(attr = chart2_attr);
