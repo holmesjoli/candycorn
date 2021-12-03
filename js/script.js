@@ -188,7 +188,8 @@ let chart1_attr = {
     ylab: "Candy corn purchased (lbs)",
     xlab: "State",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
-    show_stroke_legend: true};
+    show_stroke_legend: true,
+    button_id: "#pounds"};
 
 let chart2_attr = {
     yVar: "pound_per_pop_100",
@@ -197,18 +198,9 @@ let chart2_attr = {
     ylab: "Pounds purchased per 100 people",
     xlab: "State",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
-    show_stroke_legend: true};
-
-let chart3_attr = {
-    yVar: "pound_per_pop_100",
-    xVar: "region_name",
-    pth: "./data/candycorn_region.csv",
-    ylab: "Pounds purchased per 100 people",
-    xlab: "Region",
-    title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
-    show_stroke_legend: false};
+    show_stroke_legend: true,
+    button_id: "#pound_per_pop_100"};
 
 bar("#chart-1", attr = chart1_attr);
 bar("#chart-2", attr = chart2_attr);
-bar("#chart-3", attr = chart3_attr);
 
