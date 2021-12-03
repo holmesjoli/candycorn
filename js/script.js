@@ -261,6 +261,37 @@ function bar_transition(attr = chart1_attr) {
                     .attr("height", height)
                     .attr("width", width);
 
+        //Axes
+        const xAxis = svg.append("g")
+                    .attr("transform",`translate(0,${height-margin.bottom})`)              
+                    .call(d3.axisBottom().scale(xScale))
+                    .selectAll("text")	
+                    .style("text-anchor", "end")
+                    .attr("dx", "-.8em")
+                    .attr("dy", ".15em")
+                    .attr("transform", "rotate(-65)");
+
+        const yAxis = svg.append("g")
+                    .attr("transform",`translate(${margin.left},0)`)
+                    .call(d3.axisLeft().scale(yScale));
+
+        svg.append("text")
+                    .attr("class","axisLabel")
+                    .attr("x", margin.left + (width-margin.left-margin.right)/2)
+                    .attr("y", height - 5)
+                    .attr("text-anchor","middle")
+                    .text(attr.xlab);
+
+        svg.append("text")
+                    .attr("class","axisLabel")
+                    .attr("x", -(height-margin.bottom)/2)
+                    .attr("y", 30)
+                    .attr("text-anchor","middle")
+                    .attr("transform","rotate(-90)")
+                    .text(attr.ylab);
+
+        // Bars
+
         let bar = svg.selectAll("rect")
             .data(data)
             .enter()
@@ -281,7 +312,11 @@ function bar_transition(attr = chart1_attr) {
                 .duration(1500)
                 .attr("y", function(d) { return yScale(d.pounds); })
                 .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
-        
+
+            yAxis.transition()
+                .duration(500)
+                .call(d3.axisLeft().scale(yScale));
+
         });
 
         d3.select("#pound_per_pop_100").on("click", function() {
@@ -292,6 +327,9 @@ function bar_transition(attr = chart1_attr) {
                 .attr("y", function(d) { return yScale(d.pound_per_pop_100); })
                 .attr("height", function(d) { return height - margin.bottom - yScale(d.pound_per_pop_100); });
 
+            yAxis.transition()
+                .duration(500)
+                .call(d3.axisLeft().scale(yScale));
         });
     });
 };
