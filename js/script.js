@@ -63,7 +63,7 @@ function title(svg, width, margin, attr) {
 
 // title Bar Transition
 // description Transitions the bars between two different variables and updates corresponding labels and title
-function barTransition(svg, bars, yAxis, yScale, data, height, width, margin, tooltip, attr) {
+function barTransition(svg, bars, yAxis, yScale, xScale, data, height, width, margin, tooltip, attr) {
 
     d3.select(attr.button_id).on("click", function() {
 
@@ -87,25 +87,24 @@ function barTransition(svg, bars, yAxis, yScale, data, height, width, margin, to
 
         yLabel(svg, height, margin, attr);
         title(svg, width, margin, attr);
-        tt(bars, tooltip, attr);
+        tt(bars, xScale, tooltip, attr);
 
         document.getElementById(attr.other_button_id).classList.remove("active");
         d3.select(attr.button_id).attr("class", "active");
     });
 };
 
-function tt(bars, tooltip, attr) {
+function tt(bars, xScale, tooltip, attr) {
 
     bars.on("mouseover", function(e, d) {
+
         let t = d3.select(this);
-        console.log(this);
-        let x = +t.attr("x");
-        let y = +t.attr("y");
-        console.log([x, y]);
+        let x = +t.attr("x") - xScale.bandwidth()/2;
+        let y = +t.attr("y") - 30;
 
         tooltip.style("visibility","visible") 
             .style("left", `${x}px`)         
-            .style("top", `${y}px`) 
+            .style("top", `${y}px`)
             .html(`${Math.round(d[attr.yVar], 1)} ${attr.tooltip}`);
 
         bars.attr("opacity", 0.2);
@@ -125,7 +124,7 @@ function tt(bars, tooltip, attr) {
 function barChart(data, pound_attr, pound_per_pop_attr) {
 
         const height = window.innerHeight;
-        const width = height*.9;
+        const width = height*1.5;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
 
         const lb = {
@@ -244,7 +243,7 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
             .attr("y", margin.top +180)
             .attr("fill", "#333333")
             .attr("stroke", "#9cb6dd")
-            .attr("stroke-width", 2);
+            .attr("stroke-width", 4);
 
         svg
             .append("text")
@@ -262,10 +261,10 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
             .append("div")
             .attr("class","tooltip");
 
-        tt(bars, tooltip, pound_attr);
+        tt(bars, xScale, tooltip, pound_attr);
 
-        barTransition(svg, bars, yAxis, yScale, data, height, width, margin, tooltip, pound_attr);
-        barTransition(svg, bars, yAxis, yScale, data, height, width, margin, tooltip, pound_per_pop_attr);
+        barTransition(svg, bars, yAxis, yScale, xScale, data, height, width, margin, tooltip, pound_attr);
+        barTransition(svg, bars, yAxis, yScale, xScale, data, height, width, margin, tooltip, pound_per_pop_attr);
 };
 
 d3.csv("./data/candycorn.csv").then(function(data) {
