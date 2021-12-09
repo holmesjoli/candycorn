@@ -12,6 +12,27 @@ html, body {
     position: relative;
 }
 
+h1 {
+text-align: center;
+}
+
+.axisLabel {
+font-size: 16pt;
+font-weight: bold;
+}
+
+.axis {
+font-size: 12pt;
+}
+
+/* 
+The following CSS rule is used to style a tooltip div that is later created by D3;
+Note that this relies on several CSS properties:
+- the tooltip div must have position: absolute;
+- the container for the tooltip (above, #chart) must have position: relative;
+- we position the tooltip div through the top and left properties, which are relative to the top and left edges of the container (#chart)
+*/
+
 .tooltip {
     /* THE FOLLOWING PROPERTIES
     ARE REQUIRED TO MAKE THE TOOLTIP
@@ -26,10 +47,9 @@ html, body {
     OPTIONAL AND AESTHETIC */
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 14pt;
-    background-color:rgba(255, 255, 255, 0.5);
+    background-color:rgba(255, 238, 126, 0.5);
     padding: 2px;
 }
-
 
 /* * {
     -moz-box-sizing: border-box;
@@ -38,10 +58,34 @@ html, body {
 }
 
 html, body {
+    margin: 0px;
+    padding: 0px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     background-color: #333333;
     color: #ffffff;
+}
+
+h1 {
     margin: 0;
+    font-family: mauritius-cond,serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 45px;
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 3px;
+}
+
+h5 {
+    margin: 3px 0;
+}
+
+h6 {
+    margin: 3px 0;
+    font-weight: 300;
+    font-size: 12px;
 }
 
 .sub-head,
@@ -58,12 +102,28 @@ div#container {
 }
 
 figure#chart {
-    height: 100vh;
+    width: 100%;
+    position: relative;
     max-height: 100vh;
+    height: 100vh;
     overflow: hidden;
     padding: 0px;
     margin: 0px;
 }
+
+.tooltip {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    visibility: hidden;
+    pointer-events: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14pt;
+    background-color:rgba(255, 255, 255, 0.5);
+    padding: 2px;
+} */
+
+/*
 
 #footer,
 #header {
@@ -94,29 +154,6 @@ figure#chart {
     flex: 1 0 25%;
     padding: 20px;
     border-right: 1px solid #ffffff;
-}
-
-h1 {
-    margin: 0;
-    font-family: mauritius-cond,serif;
-    font-weight: 500;
-    font-style: normal;
-    font-size: 45px;
-}
-
-h3 {
-    margin-top: 0;
-    margin-bottom: 3px;
-}
-
-h5 {
-    margin: 3px 0;
-}
-
-h6 {
-    margin: 3px 0;
-    font-weight: 300;
-    font-size: 12px;
 }
 
 p {
