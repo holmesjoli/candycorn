@@ -196,7 +196,7 @@ let chart2_attr = {
 
 // Title Y Label
 // Description updates the label depending on the attribute
-function yLabel (svg, height, margin, attr) {
+function yLabel(svg, height, margin, attr) {
 
     d3.select("#yAxisLabel").remove();
 
@@ -209,6 +209,33 @@ function yLabel (svg, height, margin, attr) {
         .attr("transform","rotate(-90)")
         .text(attr.yLab);
 }
+
+function barTransition(svg, bar, yAxis, yScale, data, height, margin, attr) {
+
+    d3.select(attr.button_id).on("click", function() {
+
+        let yVar = attr.yVar;
+
+        let minMax = {
+            max: d3.max(data, function(d) {return +d[yVar];}),
+            min: d3.min(data, function(d) {return +d[yVar];})
+        };
+
+        yScale.domain([0, minMax.max]);
+
+        bar.transition()
+            .duration(1500)
+            .attr("y", function(d) { return yScale(d[yVar]); })
+            .attr("height", function(d) { return height - margin.bottom - yScale(d[yVar]); });
+
+        yAxis.transition()
+            .duration(500)
+            .call(d3.axisLeft().scale(yScale));
+
+        yLabel(svg, height, margin, attr);
+    });
+
+};
 
 // Title Bar chart
 // Param pound_attr object. Object of attributes for pound bar graph.
@@ -306,51 +333,8 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                 .attr("width", xScale.bandwidth())
                 .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
 
-        d3.select(pound_attr.button_id).on("click", function() {
-
-            let yVar = pound_attr.yVar;
-
-            let minMax = {
-                max: d3.max(data, function(d) {return +d[yVar];}),
-                min: d3.min(data, function(d) {return +d[yVar];})
-            };
-
-            yScale.domain([0, minMax.max]);
-
-            bar.transition()
-                .duration(1500)
-                .attr("y", function(d) { return yScale(d[yVar]); })
-                .attr("height", function(d) { return height - margin.bottom - yScale(d[yVar]); });
-
-            yAxis.transition()
-                .duration(500)
-                .call(d3.axisLeft().scale(yScale));
-
-            yLabel(svg, height, margin, pound_attr);
-        });
-
-        d3.select(pound_per_pop_attr.button_id).on("click", function() {
-
-            let yVar = pound_per_pop_attr.yVar;
-
-            let minMax = {
-                max: d3.max(data, function(d) {return +d[yVar];}),
-                min: d3.min(data, function(d) {return +d[yVar];})
-            };
-
-            yScale.domain([0, minMax.max]);
-
-            bar.transition()
-                .duration(1500)
-                .attr("y", function(d) { return yScale(d[yVar]); })
-                .attr("height", function(d) { return height - margin.bottom - yScale(d[yVar]); });
-
-            yAxis.transition()
-                .duration(500)
-                .call(d3.axisLeft().scale(yScale));
-
-            yLabel(svg, height, margin, pound_per_pop_attr);
-        });
+        barTransition(svg, bar, yAxis, yScale, data, height, margin, pound_attr);
+        barTransition(svg, bar, yAxis, yScale, data, height, margin, pound_per_pop_attr);
 };
 
 d3.csv("./data/candycorn.csv").then(function(data) {
