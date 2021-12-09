@@ -101,21 +101,13 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
         const height = window.innerHeight;
         const width = height*.9;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
-        
-        let yVar = pound_attr.yVar;
-        let xVar = pound_attr.xVar;
 
         const lb = {
             max: d3.max(data, function(d) {return +d.pounds;}),
             min: d3.min(data, function(d) {return +d.pounds;})
         };
 
-        const lb_cap = {
-            max: d3.max(data, function(d) {return +d.pound_per_pop_100;}),
-            min: d3.min(data, function(d) {return +d.pound_per_pop_100;})
-        };
-
-        const geo = d3.map(data, function(d) {return d[xVar];})
+        const geo = d3.map(data, function(d) {return d.name;})
         const regions = d3.map(data, function(d) {return d.region_name;})
         const fillColors = ["#1B9E77", "#FF761E", "#7570B3", "#F7CD1E"];
         const strokeColors = ["#333333", "white"];
@@ -173,7 +165,6 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                     .text("State");
 
         yLabel(svg, height, margin, pound_attr);
-
         title(svg, width, margin, pound_attr);
 
         // Bars
