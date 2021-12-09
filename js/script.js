@@ -14,10 +14,6 @@ function unique_array(data, variable) {
     return u;
 };
 
-// Title Bar
-// Param attr object. Object of attributes
-// Param yVar string. Name of the y-variable
-// Return object
 function bar(attr) {
 
     // Data originally from https://www.candystore.com/blog/halloween-candy-data-2021/
@@ -199,7 +195,11 @@ let chart2_attr = {
     show_stroke_legend: true,
     button_id: "#pound_per_pop_100"};
 
-
+// Title Bar chart
+// Param pound_attr object. Object of attributes for pound bar graph.
+// Param pound_per_pop_attr. Object of attributes for pound per pop graph.
+// Param yVar string. Name of the y-variable
+// Return object
 function barChart(data, pound_attr, pound_per_pop_attr) {
 
         const height = window.innerHeight;
@@ -299,12 +299,19 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
 
         d3.select("#pounds").on("click", function() {
 
-            yScale.domain([0, lb.max]);
+            let yVar = pound_attr.yVar;
+
+            let minMax = {
+                max: d3.max(data, function(d) {return +d[yVar];}),
+                min: d3.min(data, function(d) {return +d[yVar];})
+            };
+
+            yScale.domain([0, minMax.max]);
 
             bar.transition()
                 .duration(1500)
-                .attr("y", function(d) { return yScale(d.pounds); })
-                .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
+                .attr("y", function(d) { return yScale(d[yVar]); })
+                .attr("height", function(d) { return height - margin.bottom - yScale(d[yVar]); });
 
             yAxis.transition()
                 .duration(500)
@@ -313,12 +320,20 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
         });
 
         d3.select("#pound_per_pop_100").on("click", function() {
-            yScale.domain([0, lb_cap.max]);
+
+            let yVar = pound_per_pop_attr.yVar;
+
+            let minMax = {
+                max: d3.max(data, function(d) {return +d[yVar];}),
+                min: d3.min(data, function(d) {return +d[yVar];})
+            };
+
+            yScale.domain([0, minMax.max]);
 
             bar.transition()
                 .duration(1500)
-                .attr("y", function(d) { return yScale(d.pound_per_pop_100); })
-                .attr("height", function(d) { return height - margin.bottom - yScale(d.pound_per_pop_100); });
+                .attr("y", function(d) { return yScale(d[yVar]); })
+                .attr("height", function(d) { return height - margin.bottom - yScale(d[yVar]); });
 
             yAxis.transition()
                 .duration(500)
