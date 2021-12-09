@@ -184,36 +184,30 @@ function bar(attr) {
 let chart1_attr = {
     yVar: "pounds",
     xVar: "name",
-    pth: "./data/candycorn.csv",
     ylab: "Candy corn purchased (lbs)",
     xlab: "State",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
     show_stroke_legend: true,
-    chart_id: "#chart",
     button_id: "#pounds"};
 
 let chart2_attr = {
     yVar: "pound_per_pop_100",
     xVar: "name",
-    pth: "./data/candycorn.csv",
     ylab: "Pounds purchased per 100 people",
     xlab: "State",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
     show_stroke_legend: true,
-    chart_id: "#chart",
     button_id: "#pound_per_pop_100"};
 
 
-function bar_transition(attr = chart1_attr) {
+function bar_transition(data, pound_attr, pound_per_pop_attr) {
 
-    d3.csv(attr.pth).then(function(data) {
-
-        const width = 1000;
         const height = window.innerHeight;
+        const width = height*.9;
         const margin = {top: 100, left: 100, right: 200, bottom: 125};
         
-        let yVar = attr.yVar;
-        let xVar = attr.xVar;
+        let yVar = pound_attr.yVar;
+        let xVar = pound_attr.xVar;
 
         const lb = {
             max: d3.max(data, function(d) {return +d[yVar];}),
@@ -256,7 +250,7 @@ function bar_transition(attr = chart1_attr) {
                     .domain(high_per_pop_unique)
                     .range(strokeColors);
 
-        let svg = d3.select(attr.chart_id)
+        let svg = d3.select("#chart")
                     .append("svg")
                     .attr("height", height)
                     .attr("width", width);
@@ -280,7 +274,7 @@ function bar_transition(attr = chart1_attr) {
                     .attr("x", margin.left + (width-margin.left-margin.right)/2)
                     .attr("y", height - 5)
                     .attr("text-anchor","middle")
-                    .text(attr.xlab);
+                    .text(pound_attr.xlab);
 
         svg.append("text")
                     .attr("class","axisLabel")
@@ -288,7 +282,7 @@ function bar_transition(attr = chart1_attr) {
                     .attr("y", 30)
                     .attr("text-anchor","middle")
                     .attr("transform","rotate(-90)")
-                    .text(attr.ylab);
+                    .text(pound_attr.ylab);
 
         // Bars
 
@@ -331,7 +325,8 @@ function bar_transition(attr = chart1_attr) {
                 .duration(500)
                 .call(d3.axisLeft().scale(yScale));
         });
-    });
 };
 
-bar_transition();
+d3.csv("./data/candycorn.csv").then(function(data) {
+    bar_transition(data, pound_attr = chart1_attr, pound_per_pop_attr = chart2_attr);
+});
