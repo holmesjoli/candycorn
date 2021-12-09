@@ -333,6 +333,58 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                 .attr("width", xScale.bandwidth())
                 .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
 
+        // Region legend
+        const legendx = width - margin.right;
+        const legend_margin = 10;
+
+        svg.selectAll("region-legend")
+            .data(legend_data)
+            .enter()
+            .append("rect")
+                .attr("width", 20)
+                .attr("height", 20)
+                .attr("x", legendx + legend_margin)
+                .attr("y", function(d, i) {return 30*i + margin.top + 20;})
+                .attr("fill", function(d) {return d.color});
+
+        svg.selectAll("region-legend")
+                .data(legend_data)
+                .enter()
+                .append("text")
+                    .attr("x", legendx + 35)
+                    .attr("y", function(d, i) {return 30*i + margin.top + 35;})
+                    .text(function(d) {return d.regions});
+
+        svg
+            .append("text")
+            .attr("x", legendx + legend_margin)
+            .attr("y", margin.top + 5)
+            .text("Region")
+            .style("font-weight", "bold");
+
+        // Stroke legend
+        svg
+            .append("rect")
+            .attr("width", 20)
+            .attr("height", 20)
+            .attr("x", legendx + legend_margin)
+            .attr("y", margin.top +180)
+            .attr("fill", "#333333")
+            .attr("stroke", "white")
+            .attr("stroke-width", 2);
+
+        svg
+            .append("text")
+            .attr("x", legendx + legend_margin + 25)
+            .attr("y", margin.top + 190)
+            .text("High consumption");
+
+        svg
+            .append("text")
+            .attr("x", legendx + legend_margin + 25)
+            .attr("y", margin.top + 205)
+            .text("per capita threshold");
+
         barTransition(svg, bar, yAxis, yScale, data, height, margin, pound_attr);
         barTransition(svg, bar, yAxis, yScale, data, height, margin, pound_per_pop_attr);
 };
