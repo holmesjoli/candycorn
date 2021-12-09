@@ -180,8 +180,7 @@ function bar(attr) {
 let chart1_attr = {
     yVar: "pounds",
     xVar: "name",
-    ylab: "Candy corn purchased (lbs)",
-    xlab: "State",
+    yLab: "Candy corn purchased (lbs)",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
     show_stroke_legend: true,
     button_id: "#pounds"};
@@ -189,11 +188,27 @@ let chart1_attr = {
 let chart2_attr = {
     yVar: "pound_per_pop_100",
     xVar: "name",
-    ylab: "Pounds purchased per 100 people",
-    xlab: "State",
+    yLab: "Pounds purchased per 100 people",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
     show_stroke_legend: true,
     button_id: "#pound_per_pop_100"};
+
+
+// Title Y Label
+// Description updates the label depending on the attribute
+function yLabel (svg, height, margin, attr) {
+
+    d3.select("#yAxisLabel").remove();
+
+    svg.append("text")
+        .attr("class","axisLabel")
+        .attr("id", "yAxisLabel")
+        .attr("x", -(height-margin.bottom)/2)
+        .attr("y", 30)
+        .attr("text-anchor","middle")
+        .attr("transform","rotate(-90)")
+        .text(attr.yLab);
+}
 
 // Title Bar chart
 // Param pound_attr object. Object of attributes for pound bar graph.
@@ -274,15 +289,9 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                     .attr("x", margin.left + (width-margin.left-margin.right)/2)
                     .attr("y", height - 5)
                     .attr("text-anchor","middle")
-                    .text(pound_attr.xlab);
+                    .text("State");
 
-        svg.append("text")
-                    .attr("class","axisLabel")
-                    .attr("x", -(height-margin.bottom)/2)
-                    .attr("y", 30)
-                    .attr("text-anchor","middle")
-                    .attr("transform","rotate(-90)")
-                    .text(pound_attr.ylab);
+        yLabel(svg, height, margin, pound_attr);
 
         // Bars
         let bar = svg.selectAll("rect")
@@ -317,6 +326,7 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                 .duration(500)
                 .call(d3.axisLeft().scale(yScale));
 
+            yLabel(svg, height, margin, pound_attr);
         });
 
         d3.select("#pound_per_pop_100").on("click", function() {
@@ -338,6 +348,8 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
             yAxis.transition()
                 .duration(500)
                 .call(d3.axisLeft().scale(yScale));
+
+            yLabel(svg, height, margin, pound_per_pop_attr);
         });
 };
 
