@@ -136,7 +136,7 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
         const geo = d3.map(data, function(d) {return d.name;})
         const regions = d3.map(data, function(d) {return d.region_name;})
         const fillColors = ["#1B9E77", "#FF761E", "#7570B3", "#F7CD1E"];
-        const strokeColors = ["#333333", "white"];
+        const strokeColors = ["#333333", "#9cb6dd"];
 
         const regions_unique = unique_array(data, "region_name");
         const high_per_pop_unique = unique_array(data, "high_per_pop");
@@ -243,7 +243,7 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
             .attr("x", legendx + legend_margin)
             .attr("y", margin.top +180)
             .attr("fill", "#333333")
-            .attr("stroke", "white")
+            .attr("stroke", "#9cb6dd")
             .attr("stroke-width", 2);
 
         svg

@@ -71,10 +71,16 @@ text {
 
 #footer,
 #header {
-    flex: 1 0 2%;
+    /* flex: 1 0 2%; */
     background-color: #9cb6dd;
     color: #000000;
     text-align: center;
+}
+
+#footer {
+    bottom: 0;
+    height: 50px;
+    width: 100%;
 }
 
 #byline {
@@ -97,7 +103,7 @@ text {
 #sidebar {
     flex: 1 0 25%;
     padding: 20px;
-    border-right: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
 }
 
 p {
