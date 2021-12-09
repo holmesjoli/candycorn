@@ -306,7 +306,7 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                 .attr("width", xScale.bandwidth())
                 .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
 
-        d3.select("#pounds").on("click", function() {
+        d3.select(pound_attr.button_id).on("click", function() {
 
             let yVar = pound_attr.yVar;
 
@@ -329,7 +329,7 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
             yLabel(svg, height, margin, pound_attr);
         });
 
-        d3.select("#pound_per_pop_100").on("click", function() {
+        d3.select(pound_per_pop_attr.button_id).on("click", function() {
 
             let yVar = pound_per_pop_attr.yVar;
 
