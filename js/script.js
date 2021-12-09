@@ -210,6 +210,22 @@ function yLabel(svg, height, margin, attr) {
         .text(attr.yLab);
 }
 
+// title Title
+// Description Adds a title to each of the plots
+function title(svg, width, margin, attr) {
+
+    d3.select("#chart-title").remove();
+
+    svg
+        .append("text")
+        .attr("id", "chart-title")
+        .attr("x", (width - margin.left)/2)
+        .attr("y", 50)
+        .attr("font-size", 20)
+        .text(attr.title)
+        .attr("text-anchor", "middle");
+};
+
 function barTransition(svg, bar, yAxis, yScale, data, height, margin, attr) {
 
     d3.select(attr.button_id).on("click", function() {
@@ -233,6 +249,7 @@ function barTransition(svg, bar, yAxis, yScale, data, height, margin, attr) {
             .call(d3.axisLeft().scale(yScale));
 
         yLabel(svg, height, margin, attr);
+        title(svg, width, margin, attr);
     });
 
 };
@@ -319,6 +336,8 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                     .text("State");
 
         yLabel(svg, height, margin, pound_attr);
+
+        title(svg, width, margin, pound_attr);
 
         // Bars
         let bar = svg.selectAll("rect")
