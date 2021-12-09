@@ -2,13 +2,15 @@ let chart1_attr = {
     yVar: "pounds",
     yLab: "Candy corn purchased (lbs)",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
-    button_id: "#pounds"};
+    button_id: "#pounds",
+    tooltip: "pounds"};
 
 let chart2_attr = {
     yVar: "pound_per_pop_100",
     yLab: "Pounds purchased per 100 people",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
-    button_id: "#pound_per_pop_100"};
+    button_id: "#pound_per_pop_100",
+    tooltip: "lb(s) per 100 people"};
 
 //Title Unique Array
 //Description the unique value of a variable from the data
@@ -59,7 +61,7 @@ function title(svg, width, margin, attr) {
 
 // title Bar Transition
 // description Transitions the bars between two different variables and updates corresponding labels and title
-function barTransition(svg, bar, yAxis, yScale, data, height, margin, attr) {
+function barTransition(svg, bar, yAxis, yScale, data, height, width, margin, tooltip, attr) {
 
     d3.select(attr.button_id).on("click", function() {
 
@@ -83,8 +85,30 @@ function barTransition(svg, bar, yAxis, yScale, data, height, margin, attr) {
 
         yLabel(svg, height, margin, attr);
         title(svg, width, margin, attr);
+        tt(bar, tooltip, attr);
     });
 };
+
+function tt(bar, tooltip, attr) {
+
+    bar.on("mouseover", function(e, d) {
+        let t = d3.select(this);
+        let x = +t.attr("x");
+        let y = +t.attr("y");
+        console.log([x, y]);
+
+        tooltip.style("visibility","visible") 
+            .style("left", `${x}px`)         
+            .style("top", `${y}px`) 
+            .html(`${Math.round(d[attr.yVar], 1)} ${attr.tooltip}`); 
+        bar.attr("opacity", 0.2);
+        t.attr("opacity", 1);
+
+    }).on("mouseout", function() {
+        tooltip.style("visibility","hidden");   
+        bar.attr("opacity", 1);
+    });
+}
 
 // Title Bar chart
 // Param pound_attr object. Object of attributes for pound bar graph.
@@ -227,8 +251,14 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
             .attr("y", margin.top + 205)
             .text("per capita threshold");
 
-        barTransition(svg, bar, yAxis, yScale, data, height, margin, pound_attr);
-        barTransition(svg, bar, yAxis, yScale, data, height, margin, pound_per_pop_attr);
+        const tooltip = d3.select("#chart")
+            .append("div")
+            .attr("class","tooltip");
+
+        tt(bar, tooltip, pound_attr);
+
+        barTransition(svg, bar, yAxis, yScale, data, height, width, margin, tooltip, pound_attr);
+        barTransition(svg, bar, yAxis, yScale, data, height, width, margin, tooltip, pound_per_pop_attr);
 };
 
 d3.csv("./data/candycorn.csv").then(function(data) {
