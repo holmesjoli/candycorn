@@ -200,7 +200,7 @@ let chart2_attr = {
     button_id: "#pound_per_pop_100"};
 
 
-function bar_transition(data, pound_attr, pound_per_pop_attr) {
+function barChart(data, pound_attr, pound_per_pop_attr) {
 
         const height = window.innerHeight;
         const width = height*.9;
@@ -210,8 +210,8 @@ function bar_transition(data, pound_attr, pound_per_pop_attr) {
         let xVar = pound_attr.xVar;
 
         const lb = {
-            max: d3.max(data, function(d) {return +d[yVar];}),
-            min: d3.min(data, function(d) {return +d[yVar];})
+            max: d3.max(data, function(d) {return +d.pounds;}),
+            min: d3.min(data, function(d) {return +d.pounds;})
         };
 
         const lb_cap = {
@@ -285,7 +285,6 @@ function bar_transition(data, pound_attr, pound_per_pop_attr) {
                     .text(pound_attr.ylab);
 
         // Bars
-
         let bar = svg.selectAll("rect")
             .data(data)
             .enter()
@@ -328,5 +327,5 @@ function bar_transition(data, pound_attr, pound_per_pop_attr) {
 };
 
 d3.csv("./data/candycorn.csv").then(function(data) {
-    bar_transition(data, pound_attr = chart1_attr, pound_per_pop_attr = chart2_attr);
+    barChart(data, pound_attr = chart1_attr, pound_per_pop_attr = chart2_attr);
 });
