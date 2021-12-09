@@ -130,3 +130,15 @@ a:hover {
 text {
     fill: #ffffff;
 }
+
+.tooltip {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    visibility: hidden;
+    pointer-events: none;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14pt;
+    background-color:rgba(255, 238, 126, 0.5);
+    padding: 2px;
+}
