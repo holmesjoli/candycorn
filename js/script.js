@@ -3,7 +3,6 @@ let chart1_attr = {
     xVar: "name",
     yLab: "Candy corn purchased (lbs)",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
-    show_stroke_legend: true,
     button_id: "#pounds"};
 
 let chart2_attr = {
@@ -11,7 +10,6 @@ let chart2_attr = {
     xVar: "name",
     yLab: "Pounds purchased per 100 people",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
-    show_stroke_legend: true,
     button_id: "#pound_per_pop_100"};
 
 //Title Unique Array
