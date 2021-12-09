@@ -1,19 +1,3 @@
-//Title Unique Array
-//Description the unique value of a variable from the data
-//Return array
-function unique_array(data, variable) {
-
-    const u = [];
-
-    data.forEach(function(d) {
-        if (u.indexOf(d[variable]) === -1) {
-            u.push(d[variable]);
-        }
-    });
-
-    return u;
-};
-
 let chart1_attr = {
     yVar: "pounds",
     xVar: "name",
@@ -30,6 +14,20 @@ let chart2_attr = {
     show_stroke_legend: true,
     button_id: "#pound_per_pop_100"};
 
+//Title Unique Array
+//Description the unique value of a variable from the data
+//Return array
+function unique_array(data, variable) {
+
+    const u = [];
+
+    data.forEach(function(d) {
+        if (u.indexOf(d[variable]) === -1) {
+            u.push(d[variable]);
+        }
+    });
+    return u;
+};
 
 // Title Y Label
 // Description updates the label depending on the attribute
@@ -48,7 +46,7 @@ function yLabel(svg, height, margin, attr) {
 }
 
 // title Title
-// Description Adds a title to each of the plots
+// description Adds a title to each of the plots
 function title(svg, width, margin, attr) {
 
     d3.select("#chart-title").remove();
@@ -63,6 +61,8 @@ function title(svg, width, margin, attr) {
         .attr("text-anchor", "middle");
 };
 
+// title Bar Transition
+// description Transitions the bars between two different variables and updates corresponding labels and title
 function barTransition(svg, bar, yAxis, yScale, data, height, margin, attr) {
 
     d3.select(attr.button_id).on("click", function() {
@@ -88,7 +88,6 @@ function barTransition(svg, bar, yAxis, yScale, data, height, margin, attr) {
         yLabel(svg, height, margin, attr);
         title(svg, width, margin, attr);
     });
-
 };
 
 // Title Bar chart
