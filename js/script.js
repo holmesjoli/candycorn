@@ -3,13 +3,15 @@ let chart1_attr = {
     yLab: "Candy corn purchased (lbs)",
     title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
     button_id: "#pounds",
-    tooltip: "pounds"};
+    other_button_id: "pound_per_pop_100",
+    tooltip: "pounds",};
 
 let chart2_attr = {
     yVar: "pound_per_pop_100",
     yLab: "Pounds purchased per 100 people",
     title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
     button_id: "#pound_per_pop_100",
+    other_button_id: "pounds",
     tooltip: "lb(s) per 100 people"};
 
 //Title Unique Array
@@ -86,6 +88,9 @@ function barTransition(svg, bars, yAxis, yScale, data, height, width, margin, to
         yLabel(svg, height, margin, attr);
         title(svg, width, margin, attr);
         tt(bars, tooltip, attr);
+
+        document.getElementById(attr.other_button_id).classList.remove("active");
+        d3.select(attr.button_id).attr("class", "active");
     });
 };
 
@@ -197,7 +202,7 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
                 .attr("y", function(d) { return yScale(d.pounds); })
                 .attr("fill", function(d) {return fillScale(d.region_name);})
                 .attr("stroke", function(d) {return strokeScale(d.high_per_pop);})
-                .attr("stroke-width", 2)
+                .attr("stroke-width", 4)
                 .attr("width", xScale.bandwidth())
                 .attr("height", function(d) { return height - margin.bottom - yScale(d.pounds); });
 
