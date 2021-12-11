@@ -30,14 +30,13 @@ div#container {
 }
 
 h1 {
-    margin: 0;
-    font-family: mauritius-cond,serif;
+    margin: 10px 0;
     font-weight: 500;
     font-style: normal;
     font-size: 45px;
 }
 
-h3 {
+h3 {    
     margin-top: 0;
     margin-bottom: 3px;
 }
@@ -52,8 +51,13 @@ h6 {
     font-size: 12px;
 }
 
+.time > h6 {
+    color: rgb(214, 214, 214);
+}
+
 .sub-head,
-text {
+text,
+h3 {
     font-family: Helvetica, sans-serif, serif;
 }
 
@@ -108,6 +112,7 @@ text {
 
 p {
     line-height: 1.25;
+    color: rgb(214, 214, 214);
 }
 
 .time > p {
@@ -123,16 +128,17 @@ p {
 blockquote,
 .time > p {
     font-size: 13px;
+    color: rgb(214, 214, 214);
 }
 
 a {
     text-decoration: none;
-    color: #ffffff;
+    color: rgb(214, 214, 214);
 }
 
 a:hover {
     text-decoration: underline;
-    color: #ffffff;
+    color: rgb(214, 214, 214);
 }
 
 .italics {
