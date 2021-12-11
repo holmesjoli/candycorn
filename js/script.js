@@ -1,19 +1,3 @@
-let chart1_attr = {
-    yVar: "pounds",
-    yLab: "Candy corn purchased (lbs)",
-    title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
-    button_id: "#pounds",
-    other_button_id: "pound_per_pop_100",
-    tooltip: "pounds",};
-
-let chart2_attr = {
-    yVar: "pound_per_pop_100",
-    yLab: "Pounds purchased per 100 people",
-    title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
-    button_id: "#pound_per_pop_100",
-    other_button_id: "pounds",
-    tooltip: "lb(s) per 100 people"};
-
 //Title Unique Array
 //Description the unique value of a variable from the data
 //Return array
@@ -94,6 +78,7 @@ function barTransition(svg, bars, yAxis, yScale, xScale, data, height, width, ma
     });
 };
 
+//Title tooltip
 function tt(bars, xScale, tooltip, attr) {
 
     bars.on("mouseover", function(e, d) {
@@ -266,6 +251,22 @@ function barChart(data, pound_attr, pound_per_pop_attr) {
         barTransition(svg, bars, yAxis, yScale, xScale, data, height, width, margin, tooltip, pound_attr);
         barTransition(svg, bars, yAxis, yScale, xScale, data, height, width, margin, tooltip, pound_per_pop_attr);
 };
+
+let chart1_attr = {
+    yVar: "pounds",
+    yLab: "Candy corn purchased (lbs)",
+    title: "Pounds of Candy Corn Purchased during the 2021 Halloween Season",
+    button_id: "#pounds",
+    other_button_id: "pound_per_pop_100",
+    tooltip: "pounds",};
+
+let chart2_attr = {
+    yVar: "pound_per_pop_100",
+    yLab: "Pounds purchased per 100 people",
+    title: "Pounds of Candy Corn Purchased per 100 people during the 2021 Halloween Season",
+    button_id: "#pound_per_pop_100",
+    other_button_id: "pounds",
+    tooltip: "lb(s) per 100 people"};
 
 d3.csv("./data/candycorn.csv").then(function(data) {
     barChart(data, pound_attr = chart1_attr, pound_per_pop_attr = chart2_attr);
